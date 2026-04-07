@@ -12,30 +12,26 @@ O objetivo deste projeto é garantir que os dados recebidos pela API sejam valid
 
 ## 🚀 Tecnologias utilizadas
 
-- Java
+- Java 17+
 - Spring Boot
 - Spring Web
 - Spring Data JPA
 - Bean Validation (Hibernate Validator)
-- H2 Database (ou outro, se estiver usando)
+- H2 Database (ou outro)
 
 ---
 
 ## 🧱 Arquitetura do projeto
 
-A aplicação segue o princípio de separação de responsabilidades:
-
-- **DTO** → Responsável pela validação dos dados de entrada  
-- **Entity** → Representa a estrutura do banco de dados  
-- **Controller** → Camada de entrada da API  
-- **Repository** → Persistência de dados  
+- **DTO** → Validação dos dados de entrada  
+- **Entity** → Representação do banco de dados  
+- **Controller** → Entrada da API  
+- **Repository** → Persistência  
 - **Exception Handler** → Tratamento global de erros  
 
 ---
 
 ## 📦 DTO com Record
-
-Os DTOs foram implementados utilizando `record`, um recurso do Java que permite criar objetos imutáveis de forma simples e eficiente.
 
 ```java
 public record UserDTO(
@@ -51,3 +47,74 @@ public record UserDTO(
         return new User(name, email);
     }
 }
+
+✅ Benefícios:
+Menos código boilerplate
+Imutabilidade
+Mais segurança
+
+🔄 Conversão DTO → Entity
+
+A conversão dos dados é feita através de um método toEntity() dentro do DTO, mantendo o código limpo e organizado.
+
+📌 Endpoint
+➤ Criar usuário
+
+POST /users
+
+📥 Exemplo de requisição
+{
+  "name": "Hugo",
+  "email": "hugo@email.com"
+}
+
+❌ Exemplo de requisição inválida
+{
+  "name": "",
+  "email": "email-invalido"
+}
+
+🚨 Tratamento de erros
+
+A aplicação possui um tratamento global de exceções utilizando @RestControllerAdvice.
+
+📤 Resposta de erro
+{
+  "status": 400,
+  "message": "Validation error",
+  "errors": [
+    {
+      "field": "name",
+      "error": "Name is mandatory"
+    },
+    {
+      "field": "email",
+      "error": "Invalid email address"
+    }
+  ]
+}
+
+🧠 Conceitos abordados
+Validação com Bean Validation:
+@NotBlank
+@Email
+@Size
+Uso de @Valid no Controller
+Separação entre DTO e Entity
+Uso de Java Records
+Tratamento global de exceções
+Padronização de respostas de erro
+
+✅ Benefícios da validação
+Evita dados inconsistentes
+Garante integridade das informações
+Melhora a segurança da aplicação
+Facilita o consumo da API por clientes
+
+📖 Referências
+https://www.baeldung.com/spring-boot-bean-validation
+
+👨‍💻 Autor
+
+Desenvolvido por Hugo Torres
+🔗 https://github.com/Hugoftf
