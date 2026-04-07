@@ -12,7 +12,7 @@ O objetivo deste projeto é garantir que os dados recebidos pela API sejam valid
 
 ## 🚀 Tecnologias utilizadas
 
-- Java 17+
+- Java 21
 - Spring Boot
 - Spring Web
 - Spring Data JPA
