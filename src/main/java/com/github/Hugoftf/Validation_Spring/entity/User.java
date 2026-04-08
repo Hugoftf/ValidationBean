@@ -3,6 +3,7 @@ package com.github.Hugoftf.Validation_Spring.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -12,19 +13,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotBlank(message = "Email is mandatory")
-    @Email(message = "Invalid email address")
     private String email;
 
-    public User(String name, String email) {
+    private Integer age;
+
+    public User(String name, String email, Integer age) {
         this.name = name;
         this.email = email;
+        this.age = age;
     }
 
     public User(){}
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
@@ -34,19 +43,19 @@ public class User {
         this.id = id;
     }
 
-    public @NotBlank(message = "Name is mandatory") String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotBlank(message = "Name is mandatory") String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotBlank(message = "Email is mandatory") String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotBlank(message = "Email is mandatory") String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }
